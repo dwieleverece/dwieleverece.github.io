@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>web database test</title>
+</head>
+<body>
+<div id="info"></div>
+<script>
+  if (typeof(openDatabase) != "undefined") {
+    var db = openDatabase('testdb', '1.0', 'Test DB', 2 * 1024 * 1024);
+    db.transaction(function (tx) {
+      tx.executeSql('CREATE TABLE IF NOT EXISTS TESTTABLE (id unique, testvalue)');
+    });
+    db.transaction(function (tx) {
+      tx.executeSql('INSERT INTO TESTTABLE (id, testvalue) VALUES (1, "test-value")');
+    });
+  } else {
+    document.getElementById("info").innerHTML = "It seems that your browser doesn't support WebSQL";
+  }
+</script>
+
+</body>
+</html>
+
